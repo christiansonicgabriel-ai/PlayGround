@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="theme-color" content="#101114" />
+  <title>Shinobi: Clash of Legends</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Shinobi home"><span class="brand-mark">忍</span><span>SHINOBI<span class="brand-light"> / ARENA</span></span></a>
+      <div class="season"><i></i> SEASON 01 <span>•</span> THE HIDDEN LEAF</div>
+      <button id="soundBtn" class="sound-btn" aria-label="Toggle sound"><span>♫</span> <b>SOUND ON</b></button>
+    </header>
+    <section class="game-wrap">
+      <canvas id="game" aria-label="3D ninja fighting arena"></canvas>
+      <div class="vignette"></div>
+      <div id="intro" class="intro">
+        <div class="eyebrow"><span class="eyeline"></span> THE SHINOBI WORLD AWAITS</div>
+        <h1>CLASH OF<br><em>LEGENDS</em></h1>
+        <p>Every era. Every shinobi. One battlefield.</p>
+        <button id="playBtn" class="primary-btn">ENTER THE ARENA <span>↗</span></button>
+        <div class="intro-foot"><span>● 6 LEGENDS</span><span>● 3 BATTLEFIELDS</span><span>● INFINITE RIVALRIES</span></div>
+      </div>
+      <section id="selectScreen" class="select-screen hidden">
+        <div class="select-top"><div><div class="eyebrow">CHOOSE YOUR FIGHTER</div><h2>SELECT SHINOBI</h2></div><div class="select-count">01 <span>/</span> 06</div></div>
+        <div id="roster" class="roster"></div>
+        <div class="select-bottom"><div class="fighter-info"><div class="role">HIDDEN LEAF · JINCHURIKI</div><div id="fighterName">NARUTO</div><div id="fighterDesc">Never back down. Never break your word.</div></div><button id="fightBtn" class="primary-btn">FIGHT <span>→</span></button></div>
+      </section>
+      <section id="modeScreen" class="mode-screen hidden"><div class="eyebrow">A NEW CHAPTER BEGINS</div><h2>CHOOSE YOUR PATH</h2><div class="mode-grid"><button class="mode-card selected" data-mode="story"><span class="mode-icon">◈</span><b>STORY</b><small>Prove your resolve</small><span class="mode-arrow">↗</span></button><button class="mode-card" data-mode="versus"><span class="mode-icon">⚔</span><b>VERSUS</b><small>Settle the rivalry</small><span class="mode-arrow">↗</span></button><button class="mode-card" data-mode="training"><span class="mode-icon">✦</span><b>TRAINING</b><small>Master your jutsu</small><span class="mode-arrow">↗</span></button></div><div class="mode-actions"><button id="backSelect" class="text-btn">← CHANGE FIGHTER</button><button id="startFight" class="primary-btn">BEGIN BATTLE <span>→</span></button></div></section>
+      <section id="battleUI" class="battle-ui hidden">
+        <div class="match-top"><div class="player-panel"><div class="portrait p1">忍</div><div class="player-bars"><div class="player-name"><span id="pName">NARUTO</span><small>HIDDEN LEAF</small></div><div class="bar hp"><i id="pHp"></i></div><div class="bar chakra"><i id="pChakra"></i></div></div></div><div class="round-info"><div id="roundLabel">ROUND 01</div><div class="timer" id="timer">99</div><div class="round-dots"><i class="active"></i><i></i></div></div><div class="player-panel enemy-panel"><div class="player-bars"><div class="player-name"><small>AKATSUKI</small><span id="eName">SASUKE</span></div><div class="bar hp"><i id="eHp"></i></div><div class="bar chakra"><i id="eChakra"></i></div></div><div class="portrait p2">暁</div></div></div>
+        <div class="battle-message" id="battleMessage">ROUND 01 <strong>FIGHT!</strong></div>
+        <div class="battle-footer"><div class="combo-readout" id="comboReadout"><b id="comboCount">0</b><span>HIT COMBO</span></div><div class="lock-indicator" id="lockIndicator">◎ LOCK ON <span>ON</span></div><button id="exitBattle" class="exit-btn">Ⅱ <span>PAUSE</span></button></div>
+      </section>
+      <section id="resultScreen" class="result-screen hidden"><div class="eyebrow">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY</h2><p id="resultCopy">Your legend grows stronger.</p><div class="result-stats"><div><b id="statHits">0</b><span>HITS LANDED</span></div><div><b id="statTime">00:00</b><span>BATTLE TIME</span></div><div><b id="statJutsu">0</b><span>JUTSU USED</span></div></div><button id="rematchBtn" class="primary-btn">REMATCH <span>↻</span></button><button id="menuBtn" class="text-btn">RETURN TO MENU</button></section>
+      <div class="arena-label"><span class="arena-dot"></span><span id="arenaName">HIDDEN LEAF · TRAINING GROUNDS</span><span class="arena-line"></span><span>木ノ葉</span></div>
+      <div class="controls-hint"><span>MOVE <kbd>W A S D</kbd></span><i></i><span>ATTACK <kbd>J</kbd></span><i></i><span>JUTSU <kbd>K</kbd></span><i></i><span>ULTIMATE <kbd>U</kbd></span><i></i><span>CHAKRA <kbd>C</kbd></span><i></i><span>AWAKEN <kbd>T</kbd></span></div>
+      <div class="mobile-controls" id="mobileControls"><div class="dpad"><button data-key="w">▲</button><div><button data-key="a">◀</button><button data-key="s">▼</button><button data-key="d">▶</button></div></div><div class="touch-actions"><button data-key="j" class="touch-attack">ATTACK</button><button data-key="k">忍</button><button data-key="u" class="touch-ult">ULT</button><button data-key="space">DODGE</button><button data-key="c">CHAKRA</button><button data-key="t">AWAKEN</button></div></div>
+      <div class="corner-tag">UNOFFICIAL FAN CONCEPT <span>·</span> NOT AFFILIATED</div>
+    </section>
+    <footer class="site-footer"><span>SHINOBI: CLASH OF LEGENDS</span><span>INSPIRED BY THE WORLD OF NARUTO <i>•</i> FAN-MADE CONCEPT</span><span>BUILD 1.0.4 <b>◈</b></span></footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
