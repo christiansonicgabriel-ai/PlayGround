@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#101a2b" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23d8ff3e'/%3E%3Cpath d='M18 12h18c14 0 22 8 22 20S50 52 36 52H18zm13 11v18h5c6 0 9-3 9-9s-3-9-9-9z' fill='%23101828'/%3E%3C/svg%3E" />
+  <title>DROPZONE — Battle Royale</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="game-shell">
+    <canvas id="game" aria-label="Arena de jogo"></canvas>
+    <div class="grain"></div>
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">D</span><span>DROP<span class="brand-accent">ZONE</span></span><i>ZERO HOUR</i></div>
+      <div class="top-right"><span class="live-dot"></span><span id="mode-label">LOBBY • SOLO</span><button class="icon-btn" id="sound-btn" aria-label="Ativar ou desativar som">♫</button></div>
+    </header>
+
+    <section id="lobby" class="screen lobby-screen">
+      <div class="lobby-copy">
+        <p class="eyebrow"><span></span> TEMPORADA 04 &nbsp;·&nbsp; ILHA DO CREPÚSCULO</p>
+        <h1>CAIA.<br><em>LUTE.</em><br>DOMINE.</h1>
+        <p class="intro">O último esquadrão de pé leva tudo. Escolha seu agente e faça a ilha lembrar do seu nome.</p>
+        <div class="season-card"><div class="season-icon">✦</div><div><b>OPERAÇÃO: NOVO HORIZONTE</b><small>Uma nova arena espera por você</small></div><span class="season-arrow">↗</span></div>
+      </div>
+      <div class="agent-area">
+        <div class="agent-orbit orbit-a"></div><div class="agent-orbit orbit-b"></div>
+        <div class="agent-index"><span id="agent-index">01</span><small> / 03</small></div>
+        <button class="carousel-arrow left" id="prev-agent" aria-label="Agente anterior">‹</button>
+        <div class="agent-card" id="agent-card">
+          <div class="agent-tag"><span class="tag-dot"></span><span id="agent-role">VANGUARDA • ASSALTO</span></div>
+          <canvas id="portrait" width="420" height="560"></canvas>
+          <div class="agent-name"><small>AGENTE SELECIONADO</small><h2 id="agent-name">NOVA</h2><p id="agent-desc">Precisão cirúrgica. Zero hesitação.</p></div>
+          <div class="agent-stats"><span>VELOCIDADE <b id="stat-speed">■■■■□</b></span><span>RESISTÊNCIA <b id="stat-tough">■■■□□</b></span></div>
+        </div>
+        <button class="carousel-arrow right" id="next-agent" aria-label="Próximo agente">›</button>
+        <div class="agent-switch"><span class="switch-active"></span><span></span><span></span></div>
+        <div class="idle-hint">↻ &nbsp; IDLE ANIMADO</div>
+      </div>
+      <div class="lobby-bottom"><div class="controls-preview"><span class="keycap">W</span><span class="keycap">A</span><span class="keycap">S</span><span class="keycap">D</span><small>MOVER</small><span class="keycap key-wide">SHIFT</span><small>CORRER</small></div><button id="play-btn" class="play-btn"><span>ENTRAR NA ILHA</span><b>→</b></button><div class="player-note"><span class="online-dot"></span> 24 AGENTES NA FILA <small>•</small> SOLO</div></div>
+    </section>
+
+    <section id="hud" class="hud hidden">
+      <div class="hud-top-left"><div class="match-pill"><span class="live-dot"></span> ILHA DO CREPÚSCULO <i>•</i> SOLO</div><div class="zone-pill" id="zone-status"><span>◉</span> ZONA SEGURA</div></div>
+      <div class="hud-top-right"><div class="remaining"><span class="people-icon">♟</span><div><b id="remaining-count">24</b><small>RESTANTES</small></div></div><div class="timer"><small>PRÓXIMA ZONA</small><b id="zone-timer">01:42</b></div></div>
+      <div class="reticle" id="reticle"><i></i><i></i><i></i><i></i><b></b></div>
+      <div class="hit-marker" id="hit-marker">✕</div>
+      <div class="toast" id="toast"></div>
+      <div class="hud-bottom-left"><div class="vitals"><div class="vital-label"><span>♥</span> VITALIDADE <b id="hp-number">100</b></div><div class="bar hp-bar"><i id="hp-fill"></i></div><div class="vital-label shield-label"><span>⬟</span> ESCUDO <b id="shield-number">50</b></div><div class="bar shield-bar"><i id="shield-fill"></i></div></div><div class="minimap-frame"><canvas id="minimap" width="170" height="170"></canvas><span class="map-label">SECTOR 07</span><span class="map-north">N</span></div></div>
+      <div class="hud-bottom-right"><div class="weapon-panel"><div class="weapon-info"><div><small id="weapon-type">RIFLE DE ASSALTO</small><b><span id="ammo-now">24</span><i> / </i><span id="ammo-reserve">120</span></b></div><div class="reload-indicator" id="reload-indicator">RECARREGANDO</div></div><div class="weapon-icon" id="weapon-icon">⌁</div></div><div class="inventory"><div class="slot active-slot"><small>1</small><span>⌁</span><b>AR</b></div><div class="slot"><small>2</small><span>◈</span><b>SMG</b></div><div class="slot item-slot"><small>3</small><span>✦</span><b id="shield-items">×2</b></div><div class="slot item-slot"><small>4</small><span>✚</span><b id="med-items">×1</b></div></div></div>
+      <div class="center-message" id="center-message"><span>ELIMINADO</span><b>VOCÊ FOI O ÚLTIMO EM PÉ</b><button id="return-lobby">VOLTAR AO LOBBY ↗</button></div>
+      <div class="kill-feed" id="kill-feed"></div>
+      <div class="mobile-controls" id="mobile-controls"><div class="stick-zone" id="stick-zone"><div class="stick" id="stick"></div></div><button class="touch-action jump-touch" id="jump-touch">↑</button><button class="touch-action crouch-touch" id="crouch-touch">⌄</button><button class="touch-action roll-touch" id="roll-touch">↻</button><button class="touch-action fire-touch" id="fire-touch">◎</button><button class="touch-action loot-touch" id="loot-touch">E</button></div>
+      <div class="game-hint" id="game-hint"><span>WASD</span> MOVER <span>SPACE</span> PULAR <span>SHIFT</span> CORRER <span>C</span> AGACHAR <span>Q</span> ROLAR <span>R</span> RECARREGAR <span>E</span> COLETAR <span>ESC</span> MENU</div>
+    </section>
+    <section id="pause" class="pause-screen hidden"><div class="pause-card"><small>DROPZONE • PAUSADO</small><h2>RESPIRA.<br><em>REPOSICIONA.</em></h2><p>A ilha não vai a lugar nenhum.</p><button id="resume-btn" class="play-btn"><span>VOLTAR À PARTIDA</span><b>→</b></button><button id="quit-btn" class="text-btn">ABANDONAR PARTIDA</button></div></section>
+    <div class="loading-overlay hidden" id="loading"><div class="loader-mark">D</div><span>PREPARANDO INSERÇÃO</span><div class="loading-bar"><i></i></div></div>
+    <footer><span>DROPZONE <b>0.4.2</b></span><span>FEITO PARA A ILHA. OTIMIZADO PARA VOCÊ.</span><span>© 2025 • SECTOR 07</span></footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
