@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101527" />
+  <title>Mythic Drop — Crownfall Royale</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="game-shell">
+    <canvas id="game" aria-label="Crownfall Royale game arena"></canvas>
+    <div class="vignette"></div>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Mythic Drop home"><span class="brand-mark">✦</span><span>MYTHIC<span class="brand-soft">DROP</span></span></a>
+      <div class="season"><span class="live-dot"></span> SEASON 04 <i>·</i> CROWNFALL</div>
+      <div class="top-right"><span class="ping"><b></b> LIVE MATCH</span><button class="sound-button" id="soundBtn" aria-label="Toggle sound">♫</button></div>
+    </header>
+    <section class="left-rail">
+      <div class="rail-card players-card"><span class="rail-icon">♟</span><div><strong id="aliveCount">48</strong><small>REMAINING</small></div></div>
+      <div class="rail-card elim-card"><span class="rail-icon">✕</span><div><strong id="elimCount">00</strong><small>ELIMS</small></div></div>
+      <div class="quest-card"><div class="quest-head"><span>FIELD OBJECTIVE</span><span class="quest-gem">✧</span></div><strong id="objectiveTitle">Find the Crown</strong><div class="quest-desc" id="objectiveText">Recover the relic before the storm closes.</div><div class="quest-progress"><i id="questFill"></i></div><small id="questCount">0 / 3 relics</small></div>
+    </section>
+    <section class="right-rail">
+      <div class="map-card"><div class="map-heading"><span>ISLE OF AVALON</span><span class="map-expand">⌗</span></div><div class="minimap"><canvas id="map" width="180" height="180"></canvas><span class="map-n">N</span></div><div class="map-foot"><span><i class="legend-dot safe"></i>SAFE ZONE</span><span id="zoneTimer">STORM IN 01:24</span></div></div>
+      <div class="storm-card"><span class="storm-symbol">◉</span><div><small>STORM SURGE</small><strong id="stormStatus">ZONE 1 · CLOSING</strong></div><span class="storm-chevron">›</span></div>
+    </section>
+    <div class="center-message" id="centerMessage"></div>
+    <div class="bottom-left"><div class="health-label"><span>VITALS</span><span id="healthValue">100</span></div><div class="health-track"><i id="healthFill"></i></div><div class="shield-track"><i id="shieldFill"></i></div><div class="health-foot"><span>❤ HEALTH</span><span id="shieldValue">50 SHIELD</span></div></div>
+    <div class="bottom-center"><div class="weapon"><div class="weapon-icon">⌁</div><div class="weapon-copy"><small>MYTHIC WEAPON</small><strong>STARFALL BLASTER</strong></div><div class="ammo"><strong id="ammoCount">∞</strong><small>ENERGY</small></div></div><div class="hotkeys"><span><kbd>Q</kbd> FROST NOVA <i id="novaReady">READY</i></span><span><kbd>SHIFT</kbd> PHASE DASH</span><span><kbd>R</kbd> RESTART</span></div></div>
+    <div class="bottom-right"><div class="sound-wave"><i></i><i></i><i></i><i></i><i></i></div><span id="combatHint">DROP IN · SURVIVE · ASCEND</span></div>
+    <div class="touch-controls" id="touchControls"><div class="stick" id="stick"><span></span></div><button id="touchFire">✦</button><button id="touchDash">⇢</button></div>
+    <div class="overlay" id="startOverlay">
+      <div class="intro-copy"><div class="eyebrow"><span></span> A NEW LEGEND BEGINS</div><h1>THE ISLAND<br>IS <em>YOURS.</em></h1><p>Drop into a realm where storybook magic meets mythic might. Gear up, outlast the storm, and claim the Crown.</p><div class="intro-buttons"><button class="play-button" id="playBtn">ENTER THE ISLAND <span>↗</span></button><button class="how-button" id="howBtn">HOW TO PLAY <span>⌄</span></button></div><div class="intro-meta"><div class="avatar-stack"><i>♟</i><i>✧</i><i>⚔</i></div><span><b>48 HEROES</b> DROPPING NOW</span><span class="rated">✦ ALL AGES</span></div></div>
+      <div class="hero-caption"><span class="caption-line"></span><div><small>CHAPTER IV · THE CROWN AWAKENS</small><strong>ONE ISLAND. ONE CROWN.</strong></div></div>
+      <button class="close-intro" id="skipBtn" aria-label="Close intro">×</button>
+    </div>
+    <div class="how-modal hidden" id="howModal"><div class="how-panel"><button class="modal-close" id="modalClose">×</button><div class="eyebrow"><span></span> QUICK FIELD GUIDE</div><h2>READY, <em>HERO?</em></h2><div class="guide-grid"><div><kbd>W A S D</kbd><strong>MOVE</strong><small>Explore the floating isle</small></div><div><kbd>MOUSE</kbd><strong>AIM & FIRE</strong><small>Click to unleash starbolts</small></div><div><kbd>SHIFT</kbd><strong>PHASE DASH</strong><small>Slip away from danger</small></div><div><kbd>Q</kbd><strong>FROST NOVA</strong><small>Freeze nearby rivals</small></div></div><p>Collect glowing relics, keep inside the shrinking safe zone, and be the last hero standing.</p><button class="play-button" id="guidePlay">GOT IT — LET'S DROP <span>↗</span></button></div></div>
+    <div class="end-overlay hidden" id="endOverlay"><div class="end-panel"><div class="end-icon">✦</div><div class="eyebrow"><span></span><label id="endEyebrow">MATCH COMPLETE</label></div><h2 id="endTitle">CROWN<br><em>CLAIMED.</em></h2><p id="endText">The island will remember your name.</p><div class="end-stats"><div><strong id="endElims">0</strong><small>ELIMS</small></div><div><strong id="endTime">00:00</strong><small>SURVIVED</small></div><div><strong id="endRelics">0</strong><small>RELICS</small></div></div><button class="play-button" id="againBtn">PLAY AGAIN <span>↻</span></button></div></div>
+    <div class="toast" id="toast"></div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
